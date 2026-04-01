@@ -81,7 +81,7 @@ export default function App() {
             <h1 className="text-3xl pb-4">32×32 Grid Transpiler</h1>
             <div className="grid grid-cols-4 gap-4">
                 <div>
-                    <h3>Untranspiled</h3>
+                    <h3>Uncompiled</h3>
                     <textarea
                         value={untranspiled}
                         readOnly
@@ -92,7 +92,7 @@ export default function App() {
                 </div>
 
                 <div>
-                    <h3>Transpiled</h3>
+                    <h3>Compiled</h3>
                     <textarea
                         value={transpiled}
                         readOnly
