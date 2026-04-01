@@ -54,7 +54,6 @@ const presets: Record<string, string[][]> = {
 export default function App() {
     const [grid, setGrid] = useState<string[][]>(createEmptyGrid());
     const [color, setColor] = useState("#ff0000");
-    const [transpiledInput, setTranspiledInput] = useState("");
 
     const handleClick = (r: number, c: number) => {
         const newGrid = grid.map((row) => [...row]);
@@ -69,20 +68,6 @@ export default function App() {
     const untranspiled = buildUntranspiled();
     const transpiled = transpiler.ToTranspile(untranspiled);
 
-    const importTranspiled = () => {
-        const result = transpiler.FromTranspile(transpiledInput);
-
-        const rows = result
-            .split("\n")
-            .map((r) => r.split(";").filter((c) => c.length > 0));
-
-        const newGrid = Array.from({ length: SIZE }, (_, r) =>
-            Array.from({ length: SIZE }, (_, c) => rows[r]?.[c] || DEFAULT),
-        );
-
-        setGrid(newGrid);
-    };
-
     const loadPreset = (name: string) => {
         const preset = presets[name];
         if (!preset) return;
@@ -92,69 +77,77 @@ export default function App() {
     const clearGrid = () => setGrid(createEmptyGrid());
 
     return (
-        <div style={{ padding: 20 }}>
-            <h1>32×32 Grid Transpiler</h1>
+        <div className="p-4">
+            <h1 className="text-3xl pb-4">32×32 Grid Transpiler</h1>
+            <div className="grid grid-cols-4 gap-4">
+                <div>
+                    <h3>Untranspiled</h3>
+                    <textarea
+                        value={untranspiled}
+                        readOnly
+                        rows={32}
+                        style={{ width: "100%" }}
+                    />
+                </div>
 
-            <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
-                <input
-                    type="color"
-                    value={color}
-                    onChange={(e) => setColor(e.target.value)}
-                />
+                <div>
+                    <h3>Transpiled</h3>
+                    <textarea
+                        value={transpiled}
+                        readOnly
+                        rows={32}
+                        style={{ width: "100%" }}
+                    />
+                </div>
 
-                <button onClick={() => loadPreset("Mario")}>Mario</button>
-                <button onClick={() => loadPreset("Pikachu")}>Pikachu</button>
-                <button onClick={clearGrid}>Clear</button>
-            </div>
-
-            <div
-                style={{
-                    display: "grid",
-                    gridTemplateColumns: `repeat(${SIZE}, 16px)`,
-                    marginTop: 10,
-                }}
-            >
-                {grid.map((row, r) =>
-                    row.map((cell, c) => (
-                        <div
-                            key={`${r}-${c}`}
-                            onClick={() => handleClick(r, c)}
-                            style={{
-                                width: 16,
-                                height: 16,
-                                backgroundColor: `#${cell}`,
-                                border: "1px solid #ccc",
-                                cursor: "pointer",
-                            }}
+                <div className="col-span-2">
+                    <div
+                        style={{
+                            display: "flex",
+                            gap: 12,
+                            alignItems: "center",
+                        }}
+                    >
+                        <input
+                            type="color"
+                            value={color}
+                            onChange={(e) => setColor(e.target.value)}
                         />
-                    )),
-                )}
+
+                        <button onClick={() => loadPreset("Mario")}>
+                            Mario
+                        </button>
+                        <button onClick={() => loadPreset("Pikachu")}>
+                            Pikachu
+                        </button>
+                        <button onClick={clearGrid}>Clear</button>
+                    </div>
+
+                    <div
+                        style={{
+                            display: "grid",
+                            gridTemplateColumns: `repeat(${SIZE}, 16px)`,
+                            marginTop: 10,
+                        }}
+                    >
+                        {grid.map((row, r) =>
+                            row.map((cell, c) => (
+                                <div
+                                    key={`${r}-${c}`}
+                                    onClick={() => handleClick(r, c)}
+                                    style={{
+                                        width: 16,
+                                        height: 16,
+                                        backgroundColor: `#${cell}`,
+                                        border: "1px solid #ccc",
+                                        cursor: "pointer",
+                                    }}
+                                />
+                            )),
+                        )}
+                    </div>
+                </div>
             </div>
-
-            <h3>Untranspiled</h3>
-            <textarea
-                value={untranspiled}
-                readOnly
-                rows={6}
-                style={{ width: "100%" }}
-            />
-
-            <h3>Transpiled</h3>
-            <textarea
-                value={transpiled}
-                readOnly
-                rows={6}
-                style={{ width: "100%" }}
-            />
-
-            <h3>Import Transpiled</h3>
-            <textarea
-                value={transpiledInput}
-                onChange={(e) => setTranspiledInput(e.target.value)}
-                rows={4}
-                style={{ width: "100%" }}
-            />
-            <button onClick={importTranspiled}>Load</button>
         </div>
     );
 }
