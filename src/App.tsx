@@ -87,6 +87,7 @@ export default function App() {
                         readOnly
                         rows={32}
                         style={{ width: "100%" }}
+                        className="border-2 rounded p-1 overflow-scroll"
                     />
                 </div>
 
@@ -97,6 +98,7 @@ export default function App() {
                         readOnly
                         rows={32}
                         style={{ width: "100%" }}
+                        className="border-2 rounded p-1 overflow-scroll"
                     />
                 </div>
 
