@@ -206,7 +206,7 @@ export default function App() {
 
     return (
         <div style={{ padding: 20 }}>
-            <h1>32×32 Grid Transpiler</h1>
+            <h1 className="text-3xl font-bold pb-2">32×32 Grid Transpiler</h1>
 
             <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
                 <input
