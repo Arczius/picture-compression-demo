@@ -263,7 +263,7 @@ export default function App() {
                     <textarea
                         value={untranspiled}
                         readOnly
-                        rows={12}
+                        rows={14}
                         className="w-full border border-black p-1"
                     />
                 </div>
@@ -273,7 +273,7 @@ export default function App() {
                     <textarea
                         value={transpiled}
                         readOnly
-                        rows={12}
+                        rows={14}
                         className="w-full border border-black p-1"
                     />
                 </div>
@@ -283,7 +283,7 @@ export default function App() {
                     <textarea
                         value={lossyTranspiled}
                         readOnly
-                        rows={12}
+                        rows={14}
                         className="w-full border border-black p-1"
                     />
                 </div>
