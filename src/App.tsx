@@ -29,6 +29,13 @@ const lerpColor = (a: string, b: string, t: number) => {
     ).toUpperCase();
 };
 
+// random hex color
+const randomColor = () =>
+    Math.floor(Math.random() * 16777215)
+        .toString(16)
+        .padStart(6, "0")
+        .toUpperCase();
+
 // --- Presets with gradients ---
 const presets: Record<string, string[][]> = {
     Mario: (() => {
@@ -41,29 +48,23 @@ const presets: Record<string, string[][]> = {
         const blue1 = "4DA6FF";
         const blue2 = "003399";
 
-        // hat gradient
-        for (let r = 4; r <= 7; r++) {
+        for (let r = 4; r <= 7; r++)
             for (let c = 10; c <= 21; c++) {
                 const t = (c - 10) / 11;
                 g[r][c] = lerpColor(red1, red2, t);
             }
-        }
 
-        // face gradient
-        for (let r = 8; r <= 15; r++) {
+        for (let r = 8; r <= 15; r++)
             for (let c = 11; c <= 20; c++) {
                 const t = (r - 8) / 7;
                 g[r][c] = lerpColor(skin1, skin2, t);
             }
-        }
 
-        // overalls gradient
-        for (let r = 16; r <= 25; r++) {
+        for (let r = 16; r <= 25; r++)
             for (let c = 11; c <= 20; c++) {
                 const t = (r - 16) / 9;
                 g[r][c] = lerpColor(blue1, blue2, t);
             }
-        }
 
         return g;
     })(),
@@ -76,18 +77,14 @@ const presets: Record<string, string[][]> = {
         const red1 = "FF8080";
         const red2 = "CC0000";
 
-        // body gradient
-        for (let r = 8; r <= 22; r++) {
+        for (let r = 8; r <= 22; r++)
             for (let c = 10; c <= 21; c++) {
                 const t = (r - 8) / 14;
                 g[r][c] = lerpColor(y1, y2, t);
             }
-        }
 
-        // cheeks gradient
-        for (let c = 12; c <= 19; c++) {
+        for (let c = 12; c <= 19; c++)
             g[15][c] = lerpColor(red1, red2, (c - 12) / 7);
-        }
 
         return g;
     })(),
@@ -166,6 +163,31 @@ export default function App() {
         return newGrid;
     };
 
+    // NEW: random gradient generator
+    const generateRandomGradient = () => {
+        const c1 = randomColor();
+        const c2 = randomColor();
+        const c3 = randomColor();
+        const c4 = randomColor();
+
+        const newGrid = createEmptyGrid();
+
+        for (let r = 0; r < SIZE; r++) {
+            for (let c = 0; c < SIZE; c++) {
+                const tx = c / (SIZE - 1);
+                const ty = r / (SIZE - 1);
+
+                const top = lerpColor(c1, c2, tx);
+                const bottom = lerpColor(c3, c4, tx);
+                const final = lerpColor(top, bottom, ty);
+
+                newGrid[r][c] = final;
+            }
+        }
+
+        setGrid(newGrid);
+    };
+
     const lossyGrid = applyLossy(grid);
 
     const untranspiled = buildUntranspiled(grid);
@@ -195,6 +217,9 @@ export default function App() {
 
                 <button onClick={() => loadPreset("Mario")}>Mario</button>
                 <button onClick={() => loadPreset("Pikachu")}>Pikachu</button>
+                <button onClick={generateRandomGradient}>
+                    Random Gradient
+                </button>
                 <button onClick={clearGrid}>Clear</button>
             </div>
 
@@ -263,27 +288,27 @@ export default function App() {
                     <textarea
                         value={untranspiled}
                         readOnly
-                        rows={14}
+                        rows={12}
                         className="w-full border border-black p-1"
                     />
                 </div>
 
                 <div className="flex-1">
-                    <h3>Lossless Compressed</h3>
+                    <h3>Original Transpiled</h3>
                     <textarea
                         value={transpiled}
                         readOnly
-                        rows={14}
+                        rows={12}
                         className="w-full border border-black p-1"
                     />
                 </div>
 
                 <div className="flex-1">
-                    <h3>Lossy Compressed</h3>
+                    <h3>Lossy Transpiled</h3>
                     <textarea
                         value={lossyTranspiled}
                         readOnly
-                        rows={14}
+                        rows={12}
                         className="w-full border border-black p-1"
                     />
                 </div>
