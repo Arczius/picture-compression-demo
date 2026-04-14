@@ -312,7 +312,7 @@ export default function App() {
                 </div>
 
                 <div className="flex-1">
-                    <h3>Original Transpiled</h3>
+                    <h3>Lossless Compressed</h3>
                     <textarea
                         value={transpiled}
                         readOnly
@@ -322,7 +322,7 @@ export default function App() {
                 </div>
 
                 <div className="flex-1">
-                    <h3>Lossy Transpiled</h3>
+                    <h3>Lossy Compressed</h3>
                     <textarea
                         value={lossyTranspiled}
                         readOnly
