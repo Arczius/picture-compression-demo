@@ -284,7 +284,7 @@ export default function App() {
                         value={lossyTranspiled}
                         readOnly
                         rows={12}
-                        className="w-full"
+                        className="w-full border border-black p-1"
                     />
                 </div>
             </div>
