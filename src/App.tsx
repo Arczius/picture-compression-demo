@@ -215,12 +215,30 @@ export default function App() {
                     onChange={(e) => setColor(e.target.value)}
                 />
 
-                <button onClick={() => loadPreset("Mario")}>Mario</button>
-                <button onClick={() => loadPreset("Pikachu")}>Pikachu</button>
-                <button onClick={generateRandomGradient}>
+                <button
+                    className="border-1 border-black cursor-pointer rounded-sm p-1"
+                    onClick={() => loadPreset("Mario")}
+                >
+                    Mario
+                </button>
+                <button
+                    className="border-1 border-black cursor-pointer rounded-sm p-1"
+                    onClick={() => loadPreset("Pikachu")}
+                >
+                    Pikachu
+                </button>
+                <button
+                    className="border-1 border-black cursor-pointer rounded-sm p-1"
+                    onClick={generateRandomGradient}
+                >
                     Random Gradient
                 </button>
-                <button onClick={clearGrid}>Clear</button>
+                <button
+                    className="border-1 border-black cursor-pointer rounded-sm p-1"
+                    onClick={clearGrid}
+                >
+                    Clear
+                </button>
             </div>
 
             <div style={{ marginTop: 10 }}>
